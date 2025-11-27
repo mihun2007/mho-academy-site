@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration - Music School</title>
+    <link rel="icon" type="image/png" href="Logo MHO Academy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #fef5e7 0%, #f4e4c1 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: #2d3748;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #d69e2e;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid #e2e8f0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #d69e2e;
+            box-shadow: 0 0 0 3px rgba(214, 158, 46, 0.1);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #d69e2e 0%, #b7791f 100%);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .error-message {
+            color: #e53e3e;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>🎵 MHO Music Academy</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="courses.html" class="nav-link">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="registration.html" class="nav-link active">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="exam.html" class="nav-link">Exam</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin.html" class="nav-link">Admin</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container" style="padding-top: 2rem;">
+        <div class="header" style="margin-bottom: 2rem;">
+            <h1>🎵 Înregistrare Student</h1>
+            <p>Completează formularul pentru a te înregistra</p>
+        </div>
+
+        <div class="card">
+            <form id="registrationForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">Prenume *</label>
+                        <input type="text" id="firstName" required placeholder="Introdu prenumele">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Nume *</label>
+                        <input type="text" id="lastName" required placeholder="Introdu numele">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateOfBirth">Data Nașterii *</label>
+                        <input type="date" id="dateOfBirth" required>
+                        <div class="error-message" id="ageError">
+                            ⚠️ Vârsta minimă pentru înregistrare este de 13 ani.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="church">Biserică *</label>
+                        <input type="text" id="church" required placeholder="Introdu numele bisericii">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pastorName">Nume Pastor *</label>
+                        <input type="text" id="pastorName" required placeholder="Introdu numele pastorului">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pastorPhone">Telefon Pastor *</label>
+                        <input type="tel" id="pastorPhone" required placeholder="Introdu numărul de telefon">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="courseType">Tip Curs *</label>
+                        <select id="courseType" required>
+                            <option value="">Selectează tipul de curs...</option>
+                            <option value="ORNI">ORNI</option>
+                            <option value="Coarde">Coarde</option>
+                            <option value="Aerofone">Aerofone</option>
+                            <option value="Dirijor">Dirijor</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">💾 Trimite Înregistrarea</button>
+                <div id="status" class="status"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Calculate age from date of birth
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const monthDiff = today.getMonth() - birth.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        // Validate age
+        function validateAge(dateOfBirth) {
+            if (!dateOfBirth) return true;
+            
+            const age = calculateAge(dateOfBirth);
+            const ageError = document.getElementById('ageError');
+            
+            if (age < 13) {
+                ageError.classList.add('show');
+                return false;
+            } else {
+                ageError.classList.remove('show');
+                return true;
+            }
+        }
+
+        // Google Apps Script endpoint for registration (same as admin page - supports both GET and POST)
+        const REGISTRATION_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyDLsfKYNFh2Ltup7JrEvUY5l0Y1V2QrPhbJHl5-mKf9FbKNRKTEhL2amiO5ydZDj4/exec';
+
+        // Show status message
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+        }
+
+        // Hide status message
+        function hideStatus() {
+            document.getElementById('status').style.display = 'none';
+        }
+
+        // Form submission handler
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideStatus();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            
+            // Validate age
+            if (!validateAge(dateOfBirth)) {
+                showStatus('⚠️ Vârsta minimă pentru înregistrare este de 13 ani.', 'error');
+                return;
+            }
+
+            // Get form data
+            const registrationData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                dateOfBirth: dateOfBirth,
+                birthDate: dateOfBirth, // Alternative field name
+                church: document.getElementById('church').value.trim(),
+                pastorName: document.getElementById('pastorName').value.trim(),
+                pastorPhone: document.getElementById('pastorPhone').value.trim(),
+                courseType: document.getElementById('courseType').value,
+                createdAt: new Date().toISOString(),
+                timestamp: new Date().toISOString()
+            };
+
+            // Validate required fields
+            if (!registrationData.firstName || !registrationData.lastName || !registrationData.dateOfBirth ||
+                !registrationData.church || !registrationData.pastorName || !registrationData.pastorPhone || !registrationData.courseType) {
+                showStatus('⚠️ Te rugăm să completezi toate câmpurile obligatorii.', 'error');
+                return;
+            }
+
+            // Disable submit button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Se trimite...';
+
+            try {
+                showStatus('📤 Se trimite înregistrarea...', 'info');
+
+                // Send to Google Sheets via Google Apps Script
+                const response = await fetch(REGISTRATION_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registrationData)
+                });
+
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json().catch(() => {
+                    // If response is not JSON, assume success
+                    return { status: 'success', message: 'Registration submitted successfully' };
+                });
+
+                if (result.status === 'success' || result.status === 'Success' || response.ok) {
+                    // Success - save to localStorage as backup
+                    const registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
+                    registrationData.id = Date.now();
+                    registrations.push(registrationData);
+                    localStorage.setItem('registrations', JSON.stringify(registrations));
+
+                    // Show success message
+                    showStatus('✅ Înregistrare completată cu succes! Datele au fost trimise către Google Sheets.', 'success');
+
+                    // Clear form
+                    document.getElementById('registrationForm').reset();
+                    document.getElementById('ageError').classList.remove('show');
+
+                    console.log('=== REGISTRATION SUBMITTED TO GOOGLE SHEETS ===');
+                    console.log('Registration Data:', registrationData);
+                    console.log('Response:', result);
+                    console.log('==========================================');
+                } else {
+                    throw new Error(result.message || 'Registration failed');
+                }
+            } catch (error) {
+                console.error('Registration submission error:', error);
+                showStatus(`❌ Eroare: ${error.message}. Te rugăm să încerci din nou.`, 'error');
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            }
+        });
+
+        // Validate age on date change
+        document.getElementById('dateOfBirth').addEventListener('change', (e) => {
+            validateAge(e.target.value);
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }));
+        }
+    </script>
+</body>
+</html>
+

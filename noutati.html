@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noutăți și Seminare - MHO Music Academy</title>
+    <link rel="icon" type="image/png" href="Logo MHO Academy.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#fdf8f3] min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold">🎵 MHO Music Academy</h1>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="index.html" class="hover:bg-amber-700 px-4 py-2 rounded-lg transition">Home</a>
+                    <a href="courses.html" class="hover:bg-amber-700 px-4 py-2 rounded-lg transition">Courses</a>
+                    <a href="register.html" class="hover:bg-amber-700 px-4 py-2 rounded-lg transition">Register</a>
+                    <a href="exam.html" class="hover:bg-amber-700 px-4 py-2 rounded-lg transition">Exam</a>
+                    <a href="admin.html" class="hover:bg-amber-700 px-4 py-2 rounded-lg transition">Admin</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center text-amber-600 hover:text-amber-800 mb-4 transition">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Înapoi la pagina principală
+            </a>
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Noutăți și Seminare</h1>
+            <p class="text-gray-600">Vedeți cele mai recente seminare și evenimente organizate de MHO Music Academy</p>
+        </div>
+
+        <!-- Course Announcements Section -->
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Anunțuri Cursuri</h2>
+            <div id="announcementsLoading" class="text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+                <p class="mt-4 text-gray-600 text-sm">Se încarcă anunțurile...</p>
+            </div>
+            <div id="announcementsEmpty" class="hidden text-center py-8">
+                <p class="text-gray-500">Nu există anunțuri disponibile momentan.</p>
+            </div>
+            <div id="announcementsGrid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Announcement cards will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600"></div>
+            <p class="mt-4 text-gray-600">Se încarcă seminarele...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-12">
+            <div class="bg-white rounded-xl shadow-lg p-8 max-w-md mx-auto">
+                <div class="text-6xl mb-4">📅</div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Nu există seminare</h3>
+                <p class="text-gray-600">Momentan nu sunt seminare programate. Vă rugăm să reveniți mai târziu.</p>
+            </div>
+        </div>
+
+        <!-- Seminars Section -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Seminare</h2>
+            <!-- Seminars Grid -->
+            <div id="seminarsGrid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Seminar cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Înregistrare la Seminar</h2>
+                    <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="seminarInfo" class="mb-6 p-4 bg-amber-50 rounded-lg">
+                    <h3 id="modalSeminarTitle" class="font-semibold text-gray-800 mb-2"></h3>
+                    <p id="modalSeminarDates" class="text-sm text-gray-600"></p>
+                </div>
+
+                <div id="registrationStatusMessage" class="hidden mb-4 p-4 rounded-lg"></div>
+
+                <form id="seminarRegistrationForm" class="space-y-4">
+                    <div>
+                        <label for="regFirstName" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nume <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="regFirstName"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Introduceți numele"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="regLastName" class="block text-sm font-medium text-gray-700 mb-2">
+                            Prenume <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="regLastName"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Introduceți prenumele"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="regEmail" class="block text-sm font-medium text-gray-700 mb-2">
+                            Email <span class="text-red-500">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="regEmail"
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="exemplu@email.com"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="regPhone" class="block text-sm font-medium text-gray-700 mb-2">
+                            Telefon
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="regPhone"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="+373 69 123 456"
+                        >
+                    </div>
+
+                    <div>
+                        <label for="regNotes" class="block text-sm font-medium text-gray-700 mb-2">
+                            Note (opțional)
+                        </label>
+                        <textarea 
+                            id="regNotes"
+                            rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Observații sau întrebări..."
+                        ></textarea>
+                    </div>
+
+                    <button 
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-3 rounded-lg font-semibold text-lg hover:from-amber-700 hover:to-orange-700 transition shadow-lg hover:shadow-xl"
+                    >
+                        Înregistrează-te
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+        import { getFirestore, collection, query, onSnapshot, orderBy, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAV0_Buy_KKD4TSe-1IpByCVoZFoRJQaNE",
+            authDomain: "mho-music-academy.firebaseapp.com",
+            projectId: "mho-music-academy",
+            storageBucket: "mho-music-academy.firebasestorage.app",
+            messagingSenderId: "705322739069",
+            appId: "1:705322739069:web:422b6fd0c7a08ab8921814",
+            measurementId: "G-CF5HDVT6MK"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // DOM Elements
+        const loadingState = document.getElementById('loadingState');
+        const emptyState = document.getElementById('emptyState');
+        const seminarsGrid = document.getElementById('seminarsGrid');
+        const registrationModal = document.getElementById('registrationModal');
+        const closeModal = document.getElementById('closeModal');
+        const seminarRegistrationForm = document.getElementById('seminarRegistrationForm');
+        const registrationStatusMessage = document.getElementById('registrationStatusMessage');
+        const modalSeminarTitle = document.getElementById('modalSeminarTitle');
+        const modalSeminarDates = document.getElementById('modalSeminarDates');
+        const announcementsLoading = document.getElementById('announcementsLoading');
+        const announcementsEmpty = document.getElementById('announcementsEmpty');
+        const announcementsGrid = document.getElementById('announcementsGrid');
+
+        let currentSeminar = null;
+
+        // Format date range
+        function formatDateRange(startDate, endDate) {
+            if (!startDate || !endDate) return '-';
+            try {
+                const start = startDate.toDate ? startDate.toDate() : new Date(startDate);
+                const end = endDate.toDate ? endDate.toDate() : new Date(endDate);
+                
+                const startDay = start.getDate();
+                const endDay = end.getDate();
+                const monthNames = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 
+                                  'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+                const month = monthNames[start.getMonth()];
+                const year = start.getFullYear();
+                
+                if (startDay === endDay && start.getMonth() === end.getMonth() && start.getFullYear() === end.getFullYear()) {
+                    return `${startDay} ${month} ${year}`;
+                }
+                return `${startDay}–${endDay} ${month} ${year}`;
+            } catch (e) {
+                return '-';
+            }
+        }
+
+        // Truncate description
+        function truncateDescription(description, maxLength = 200) {
+            if (!description) return '';
+            if (description.length <= maxLength) return description;
+            return description.substring(0, maxLength) + '...';
+        }
+
+        // Get type badge color
+        function getTypeBadgeColor(type) {
+            const colors = {
+                'ORNI': 'bg-amber-100 text-amber-800',
+                'Coarde': 'bg-green-100 text-green-800',
+                'Aerofone': 'bg-blue-100 text-blue-800',
+                'Dirijor': 'bg-purple-100 text-purple-800',
+                'Vioriști': 'bg-pink-100 text-pink-800',
+                'General': 'bg-gray-100 text-gray-800'
+            };
+            return colors[type] || colors['General'];
+        }
+
+        // Format announcement date
+        function formatAnnouncementDate(dateString) {
+            if (!dateString) return '-';
+            try {
+                const date = dateString.toDate ? dateString.toDate() : new Date(dateString);
+                const day = date.getDate();
+                const monthNames = ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 
+                                  'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie'];
+                const month = monthNames[date.getMonth()];
+                const year = date.getFullYear();
+                return `${day} ${month} ${year}`;
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        // Format time
+        function formatTime(timeString) {
+            if (!timeString) return '-';
+            try {
+                const [hours, minutes] = timeString.split(':');
+                return `${hours}:${minutes}`;
+            } catch (e) {
+                return timeString;
+            }
+        }
+
+        // Render announcements
+        function renderAnnouncements(announcements) {
+            if (announcements.length === 0) {
+                announcementsLoading.classList.add('hidden');
+                announcementsEmpty.classList.remove('hidden');
+                announcementsGrid.classList.add('hidden');
+                return;
+            }
+
+            announcementsLoading.classList.add('hidden');
+            announcementsEmpty.classList.add('hidden');
+            announcementsGrid.classList.remove('hidden');
+
+            announcementsGrid.innerHTML = announcements.map(announcement => {
+                const date = formatAnnouncementDate(announcement.date);
+                const time = formatTime(announcement.time);
+                const badgeColor = getTypeBadgeColor(announcement.course);
+
+                return `
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:scale-105 hover:shadow-xl transition-all duration-300 border-l-4 border-amber-500">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor}">
+                                ${announcement.course || 'General'}
+                            </span>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-sm font-semibold">${date}</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span class="text-sm">Ora: ${time}</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="text-sm">${announcement.location || 'Locație nespecificată'}</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">${announcement.description || ''}</p>
+                        <a 
+                            href="register.html" 
+                            class="inline-flex items-center justify-center w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition shadow-md hover:shadow-lg"
+                        >
+                            Înregistrează-te la Curs
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render seminar cards
+        function renderSeminars(seminars) {
+            if (seminars.length === 0) {
+                loadingState.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                seminarsGrid.classList.add('hidden');
+                return;
+            }
+
+            loadingState.classList.add('hidden');
+            emptyState.classList.add('hidden');
+            seminarsGrid.classList.remove('hidden');
+
+            seminarsGrid.innerHTML = seminars.map(seminar => {
+                const dates = formatDateRange(seminar.startDate, seminar.endDate);
+                const description = truncateDescription(seminar.description);
+                const badgeColor = getTypeBadgeColor(seminar.type);
+                const titleEscaped = (seminar.title || 'Fără titlu').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                const datesEscaped = dates.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+                return `
+                    <div class="bg-white rounded-xl shadow-lg p-6 hover:scale-105 hover:shadow-xl transition-all duration-300">
+                        <div class="mb-4">
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full ${badgeColor}">
+                                ${seminar.type || 'General'}
+                            </span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">${seminar.title || 'Fără titlu'}</h3>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-sm">${dates}</span>
+                            </div>
+                            <div class="flex items-center text-gray-600">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="text-sm">${seminar.location || 'Locație nespecificată'}</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-3">${description}</p>
+                        <button 
+                            data-seminar-id="${seminar.id}"
+                            data-seminar-title="${titleEscaped}"
+                            data-seminar-dates="${datesEscaped}"
+                            class="register-seminar-btn inline-flex items-center justify-center w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-amber-700 hover:to-orange-700 transition shadow-md hover:shadow-lg"
+                        >
+                            Înregistrează-te la seminar
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </button>
+                        ${seminar.link ? `
+                            <a href="${seminar.link}" target="_blank" rel="noopener noreferrer"
+                               class="mt-2 inline-flex items-center justify-center w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-semibold hover:bg-gray-200 transition">
+                                Vezi detalii
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                            </a>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            // Add event listeners to registration buttons
+            document.querySelectorAll('.register-seminar-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const seminarId = btn.getAttribute('data-seminar-id');
+                    const title = btn.getAttribute('data-seminar-title');
+                    const dates = btn.getAttribute('data-seminar-dates');
+                    openRegistrationModal(seminarId, title, dates);
+                });
+            });
+        }
+
+        // Show status message
+        function showRegistrationStatus(message, type) {
+            registrationStatusMessage.textContent = message;
+            registrationStatusMessage.className = `mb-4 p-4 rounded-lg ${type === 'success' ? 'bg-green-100 text-green-700 border border-green-300' : 'bg-red-100 text-red-700 border border-red-300'}`;
+            registrationStatusMessage.classList.remove('hidden');
+            setTimeout(() => {
+                registrationStatusMessage.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Open registration modal
+        function openRegistrationModal(seminarId, title, dates) {
+            currentSeminar = seminarId;
+            modalSeminarTitle.textContent = title;
+            modalSeminarDates.textContent = dates;
+            registrationModal.classList.remove('hidden');
+            registrationStatusMessage.classList.add('hidden');
+            seminarRegistrationForm.reset();
+        }
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            registrationModal.classList.add('hidden');
+            currentSeminar = null;
+        });
+
+        // Close modal when clicking outside
+        registrationModal.addEventListener('click', (e) => {
+            if (e.target === registrationModal) {
+                registrationModal.classList.add('hidden');
+                currentSeminar = null;
+            }
+        });
+
+        // Handle form submission
+        seminarRegistrationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!currentSeminar) {
+                showRegistrationStatus('❌ Eroare: Seminarul nu a fost selectat', 'error');
+                return;
+            }
+
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const notes = document.getElementById('regNotes').value.trim();
+
+            if (!firstName || !lastName || !email) {
+                showRegistrationStatus('❌ Vă rugăm să completați toate câmpurile obligatorii', 'error');
+                return;
+            }
+
+            try {
+                const registrationData = {
+                    seminarId: currentSeminar,
+                    firstName,
+                    lastName,
+                    email,
+                    phone: phone || null,
+                    notes: notes || null,
+                    createdAt: serverTimestamp()
+                };
+
+                await addDoc(collection(db, 'seminarRegistrations'), registrationData);
+                showRegistrationStatus('✅ Înregistrare reușită! Vă mulțumim pentru interes.', 'success');
+                seminarRegistrationForm.reset();
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    registrationModal.classList.add('hidden');
+                    currentSeminar = null;
+                }, 2000);
+            } catch (error) {
+                console.error('Error registering for seminar:', error);
+                showRegistrationStatus('❌ Eroare la înregistrare. Vă rugăm să reîncercați.', 'error');
+            }
+        });
+
+        // Setup real-time listener for announcements
+        const announcementsQuery = query(collection(db, 'courseAnnouncements'), orderBy('createdAt', 'desc'));
+        onSnapshot(announcementsQuery, (snapshot) => {
+            const announcements = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            renderAnnouncements(announcements);
+        }, (error) => {
+            console.error('Error fetching announcements:', error);
+            announcementsLoading.innerHTML = `
+                <div class="text-center py-8">
+                    <div class="text-red-600 text-xl mb-2">❌</div>
+                    <p class="text-gray-600 text-sm">Eroare la încărcarea anunțurilor.</p>
+                </div>
+            `;
+        });
+
+        // Setup real-time listener for seminars
+        const seminarsQuery = query(collection(db, 'seminars'), orderBy('createdAt', 'desc'));
+        onSnapshot(seminarsQuery, (snapshot) => {
+            const seminars = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            renderSeminars(seminars);
+        }, (error) => {
+            console.error('Error fetching seminars:', error);
+            loadingState.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="text-red-600 text-xl mb-2">❌</div>
+                    <p class="text-gray-600">Eroare la încărcarea seminarelor. Vă rugăm să reîncercați.</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
+

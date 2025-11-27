@@ -1,0 +1,133 @@
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--accent-cream) 0%, var(--white) 100%);
+}
+
+.App-header {
+  background: var(--primary-gold);
+  color: var(--white);
+  text-align: center;
+  padding: 2rem 1rem;
+  box-shadow: var(--shadow-medium);
+}
+
+.App-nav {
+  background: var(--white);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-soft);
+  border-bottom: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: var(--white);
+  color: var(--text-medium);
+  border: 2px solid var(--border-light);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  border-color: var(--secondary-blue);
+  color: var(--secondary-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+.nav-btn.active {
+  background: var(--secondary-blue);
+  color: var(--white);
+  border-color: var(--secondary-blue);
+}
+
+.nav-btn.active:hover {
+  background: var(--secondary-blue-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.App-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.App-header p {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.App-main {
+  flex: 1;
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.App-footer {
+  background: var(--text-dark);
+  color: var(--white);
+  text-align: center;
+  padding: 1rem;
+  margin-top: auto;
+}
+
+/* CSS Variables for consistent theming */
+:root {
+  --primary-gold: #d69e2e;
+  --primary-gold-dark: #b7791f;
+  --secondary-blue: #3182ce;
+  --secondary-blue-dark: #2c5aa0;
+  --accent-cream: #fef5e7;
+  --accent-cream-dark: #f4e4c1;
+  --text-dark: #2d3748;
+  --text-medium: #4a5568;
+  --text-light: #718096;
+  --white: #ffffff;
+  --success-green: #38a169;
+  --error-red: #e53e3e;
+  --border-light: #e2e8f0;
+  --shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .App-header h1 {
+    font-size: 2rem;
+  }
+  
+  .App-header p {
+    font-size: 1rem;
+  }
+  
+  .App-main {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .App-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  .App-main {
+    padding: 0.5rem;
+  }
+}

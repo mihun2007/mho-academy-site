@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHO Music Academy - Acasă</title>
+    <link rel="icon" type="image/png" href="Logo MHO Academy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>🎵 MHO Music Academy</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">Acasă</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="courses.html" class="nav-link">Cursuri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="registration.html" class="nav-link">Înregistrare</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="exam.html" class="nav-link">Examen</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin.html" class="nav-link">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="noutati.html" class="nav-link">Noutăți</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Stăpânește arta muzicii sacre</h1>
+                    <p class="hero-description">
+                        Descoperă-ți potențialul muzical cu cursurile noastre complete de muzică creștină. 
+                        De la instrumentele tradiționale ORNI la instrumentele cu coarde și de suflat clasice, oferim 
+                        instruire condusă de experți, concentrată pe muzica sacră și tradițională pentru toate nivelurile de pregătire.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="courses.html" class="btn btn-primary btn-large">Explorează Cursurile</a>
+                        <a href="registration.html" class="btn btn-secondary btn-large">Înregistrează-te Acum</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Links Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Navigare rapidă</h2>
+                <div class="feature-grid">
+                    <a href="registration.html" class="feature-card">
+                        <div class="feature-icon">📝</div>
+                        <h3>Înscriere Studenți</h3>
+                        <p>Alege cursul tău și Înregistrează-te</p>
+                        <span class="card-link">Înregistrează-te →</span>
+                    </a>
+                    <a href="exam.html" class="feature-card">
+                        <div class="feature-icon">✍️</div>
+                        <h3>Susține examenul</h3>
+                        <p>Trimite răspunsurile la examen pentru a evalua cunoștințele tale</p>
+                        <span class="card-link">Mergi la examen →</span>
+                    </a>
+                    <a href="admin.html" class="feature-card">
+                        <div class="feature-icon">🛠️</div>
+                        <h3>Panou de Administrare</h3>
+                        <p>Gestionați înregistrările și vizualizați lucrările trimise de studenți. Doar pentru profesori.</p>
+                        <span class="card-link">Panou Admin →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Highlights Section -->
+        <section class="course-highlights">
+            <div class="container">
+                <h2 class="section-title">Categoriile Noastre de Cursuri</h2>
+                <div class="highlight-grid">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">🎹</div>
+                        <h3>Cursuri ORNI / ОРНИ</h3>
+                        <p>Stăpânește instrumentele tradiționale ORNI cu curriculum-ul nostru specializat conceput pentru educația muzicală tradițională.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">🎻</div>
+                        <h3>Instrumente cu Coarde</h3>
+                        <p>Stăpânește vioara, violoncelul, chitara și alte instrumente cu coarde cu instruire personalizată de la muzicieni experimentați.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">🎺</div>
+                        <h3>Instrumente Aerofone</h3>
+                        <p>Explorează instrumentele de suflat, inclusiv flautul, clarinetul, trompeta și multe altele, cu programe de pregătire cuprinzătoare concentrate pe muzica clasică și tradițională.</p>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-icon">👥</div>
+                        <h3>Dirijor de Cor</h3>
+                        <p>Învață arta dirijării corurilor și ansamblurilor cu programul nostru de pregătire specializat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 MHO Music Academy. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    </script>
+</body>
+</html>
